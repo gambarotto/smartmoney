@@ -1,31 +1,49 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
+import LinearGradient from 'react-native-linear-gradient'
 
-// import { Container } from './styles';
+import useBalance from '../../hooks/useBalance'
+
+import Colors from '../../styles/Colors'
 
 const BalanceLabel = () => {
-    
-    const currentValue = useSelector(state => state.currentValue)
+
+    const [balance] = useBalance()
 
     return (
-    <View style={styles.container}>
-        <Text style={styles.label}>
-            Saldo Atual
-        </Text>
-        <Text style={styles.label}>
-            {currentValue}
-        </Text>
-    </View>
+        <View style={styles.container}>
+            <Text style={styles.label}>Saldo Atual</Text>
+            <LinearGradient style={styles.panel} colors={[Colors.violet, Colors.blue]}>
+                <Text style={styles.value}>{balance}</Text>
+            </LinearGradient>
+        </View>
     )
 }
 
 export default BalanceLabel;
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    label:{
+        fontSize:12,
+        color:Colors.white,
+        fontWeight:'bold',
+    },
+    panel:{
+        minWidth:150,
+        paddingHorizontal:20,
+        paddingVertical:10,
+        borderRadius:10,
+        marginTop:10,
         justifyContent:'center',
         alignItems:'center'
+    },
+    value:{
+        fontSize:28,
+        color:Colors.white
     }
 })

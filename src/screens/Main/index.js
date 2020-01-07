@@ -14,22 +14,19 @@ export default function Main({ navigation }) {
   }
   function onEntryPress(item) {
     navigation.navigate('NewEntry',
-      { item: item })
+      { item,
+        credit: parseFloat(item.amount) > 0 ? true : false
+      })
   }
 
   function onPressActionButton() {
-    navigation.navigate('NewEntry')
+    navigation.navigate('Report')
   }
   return (
     <View style={styles.container}>
       <BalancePainel onPressNavigation={onPressNavigation} />
-
-      <EntrySummary onPressActionButton={onPressActionButton} navigation={navigation} />
-      <EntryList onEntryPress={onEntryPress} onPressActionButton={() => navigation.navigate('Report')} navigation={navigation} />
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Report')}>
-        <Text>ollllaa</Text>
-      </TouchableOpacity>
+      <EntrySummary styleProps={-15} onPressActionButton={onPressActionButton}/>
+      <EntryList onEntryPress={onEntryPress} onPressActionButton={() => navigation.navigate('Report')}/>
     </View>
   );
 }

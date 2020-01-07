@@ -12,11 +12,11 @@ const Container = ({
     title,
     actionLabelText,
     actionButtonText,
-    
     onPressActionButton,
-    iconName }) => (
+    iconName,
+    styleProps }) => (
 
-        <View style={styles.container}>
+        <View style={[styles.container, styleProps !== 0 && {marginTop:styleProps}]}>
             {title && <Text style={styles.title}>{title}</Text>}
             {children}
             {(actionLabelText || actionButtonText) && (
@@ -37,9 +37,12 @@ export default Container;
 
 const styles = StyleSheet.create({
     container: {
+        flex:1,
+        justifyContent:'space-between',
         backgroundColor: Colors.asphalt,
-        borderRadius: 4,
-        margin: 5,
+        borderRadius: 8,
+        marginVertical: 8,
+        marginHorizontal:8,
         borderWidth: 1,
         borderColor: 'rgba(255,255,255,0.2)',
         padding: 8
@@ -54,7 +57,7 @@ const styles = StyleSheet.create({
     actionContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop:5
+        marginTop:5,
     },
     actionLabel: {
         fontSize: 12,
@@ -63,7 +66,7 @@ const styles = StyleSheet.create({
     actionButton: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     actionButtonText: {
         fontSize: 12,

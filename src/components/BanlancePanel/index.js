@@ -10,9 +10,11 @@ import BalancePainelChart from './BalancePanelChart'
 import { saveEntry } from '../../services/Entries'
 import Colors from '../../styles/Colors'
 
+import useBalance from '../../hooks/useBalance'
+
 export default function BanlancePanel({onPressNavigation}) {
 
-  const currentValue = useSelector(state => state.currentValue)
+  const [balance] = useBalance()
 
   function newEntry(){
     onPressNavigation('NewEntry')
@@ -21,7 +23,7 @@ export default function BanlancePanel({onPressNavigation}) {
   return (
     <View style={styles.container}>
       <LinearGradient colors={[Colors.violet, Colors.blue]} style={styles.painel}>
-        <BalancePainelLabel currentValue={currentValue} />
+        <BalancePainelLabel currentValue={balance} />
         <BalancePainelChart />
       </LinearGradient>
       <TouchableOpacity

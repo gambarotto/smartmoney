@@ -1,81 +1,104 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons'
+
+import ActionFooter, { ActionPrimaryButton } from '../../components/Core/ActionFooter'
 
 import BalanceLabel from '../../components/BalanceLabel'
 import EntrySumary from '../../components/EntrySummary'
 import EntryList from '../../components/EntryList'
+import RelativeDaysModal from '../../components/RelativeDaysModal'
+import CategoryModal from '../../components/CategoryModal'
 
+import Colors from '../../styles/Colors'
 
-// import { Container } from './styles';
+export default function Report({ navigation }) {
 
-export default function Report() {
+  const [relativeDaysModalVisible, setRelativeDaysModalVisible] = useState(false)
+  const [relativeDays, setRelativeDays] = useState(7)
+
+  const [categoryModalVisible, setCategoryModalVisible] = useState(false)
+  const [category, setCategory] = useState({id:null, name:'Todas Categorias'})
+
+  function onRelativeDaysPress(item) {
+    setRelativeDays(item)
+    setRelativeDaysModalVisible(false)
+  }
+
+  function onModalCategoryPress(item){
+    setCategory(item)
+    setCategoryModalVisible(false)
+  }
+
   return (
     <View style={styles.container}>
+
       <BalanceLabel />
-      <View style={styles.containerBtnsFilter}>
-        <TouchableOpacity style={styles.btnsFilter}>
-          <Text style={styles.txtBtnFilter}>Todas Categorias</Text>
+      <View style={styles.containerButtons}>
+        <TouchableOpacity style={styles.buttons} onPress={() => setCategoryModalVisible(true)}>
+          <Text style={styles.txtBtn}>{category.name}</Text>
+          <Icon name='keyboard-arrow-down' size={20} color={Colors.green} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btnsFilter}>
-          <Text style={styles.txtBtnFilter}>Ultimos 7 dias</Text>
+        <CategoryModal 
+          isVisible={categoryModalVisible} 
+          categoryType='all' 
+          onConfirm={onModalCategoryPress} 
+          onCancel={setCategoryModalVisible}/>
+
+        <TouchableOpacity style={styles.buttons} onPress={() => setRelativeDaysModalVisible(true)}>
+          <Text style={styles.txtBtn}>{relativeDays > 1 ? `Últimos ${relativeDays} Dias` : `${relativeDays} Dia atrás`}</Text>
+          <Icon name='keyboard-arrow-down' size={20} color={Colors.green} />
         </TouchableOpacity>
+        <RelativeDaysModal 
+          isVisible={relativeDaysModalVisible} 
+          onConfirm={onRelativeDaysPress} 
+          onCancel={setRelativeDaysModalVisible} />
       </View>
-      <EntrySumary />
-      <EntryList />
-      <View style={styles.containerBtns}>
-        <TouchableOpacity style={styles.btns}>
-          <Text style={styles.txtBtn}>Todas Categorias</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.btns}>
-          <Text style={styles.txtBtn}>Ultimos 7 dias</Text>
-        </TouchableOpacity>
-      </View>
+
+      <EntrySumary styleProps={0} />
+      <EntryList days={relativeDays} category={category} />
+
+      <ActionFooter>
+        <ActionPrimaryButton
+          title='Fechar'
+          onPress={() => navigation.goBack()}
+        />
+      </ActionFooter>
+
     </View>
 
   );
 }
+
 const styles = StyleSheet.create({
   container: {
-    flex:1,
-    justifyContent:'space-around',
-    padding:20
+    flex: 1,
+    justifyContent: 'space-around',
+    paddingVertical: 8,
+    backgroundColor: Colors.background
   },
-  containerBtnsFilter: {
-    flex:1,
-    flexDirection:'row',
-    justifyContent:'space-around'
-  },
-  btnsFilter: {
-    width:140,
-    height:50,
-    justifyContent:'center',
+  containerButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     alignItems:'center',
-    borderWidth:1,
-    borderColor:'#333',
-    borderRadius:30
+    paddingVertical: 5,
+    marginTop: 8,
+    marginHorizontal: 8
   },
-  txtBtnFilter: {
-    fontWeight:'bold'
-  },
-  containerBtns:{
-    
-    flexDirection:'row',
-    justifyContent:'space-around',
-    alignItems:'center',
-  },
-  btns:{
-    width:120,
-    height:60,
-    borderWidth:1,
-    borderColor:'green',
-    borderRadius:30,
-    justifyContent:'center',
-    alignItems:'center',
 
+  buttons: {
+    //width: 140,
+    borderWidth: 1.5,
+    flexDirection: 'row',
+    borderColor: 'green',
+    borderRadius: 30,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 10
   },
-  txtBtn:{
-
+  txtBtn: {
+    //fontSize:12,
+    color: Colors.green
   }
-
-
 })

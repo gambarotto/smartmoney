@@ -1,14 +1,27 @@
 import {getRealm} from './Realm'
-import getNewUUID from './UUID'
+import moment from '../vendors/moment'
 
-export const getEntries = async() => {
-    const realm = await getRealm()
+export const getEntries = async(days, category) => {
+    let realm = await getRealm()
 
-    const entries = realm.objects('Entry')
+    realm = realm.objects('Entry')
 
-    //return JSON.stringify(entries)
+    if(days > 0){
+        
+        const date = moment()
+            .subtract(days, 'days')
+            .toDate()
+
+        realm = realm.filtered('entryAt>=$0', date)
+    }
+
+    if(category && category.id){
+        realm = realm.filtered('category == $0', category)
+    }
+
+    const entries = realm.sorted('entryAt',true)
+    
     return entries
-
 }
 
 export const deleteEntry = async (data) => {
@@ -18,17 +31,15 @@ export const deleteEntry = async (data) => {
         realm.write(() => {
             realm.delete(data)
         })
-
     }catch(e){
         console.log(e);
-
     }
 }
 
 export const saveEntry = async (value, idSelected) => {
     const realm = await getRealm()
     let data ={}
-    const { id, amount, entryAt } = value
+    const { id, amount, entryAt, category } = value
 
     try{
         if(!idSelected.id) console.log('fffffffff')
@@ -37,25 +48,22 @@ export const saveEntry = async (value, idSelected) => {
             data = {
                 id: idSelected.id ? idSelected.id : id,
                 amount: amount,
-                entryAt: idSelected.entryAt ? idSelected.entryAt : entryAt,
+                entryAt: entryAt,
                 isInit: false,
+                category: category
             }
             realm.create('Entry', data, true)
         })
-        // console.log(
-        //     'saveEntry :: ', JSON.stringify(data)
-        // )
+        console.log(
+            'saveEntry :: ', JSON.stringify(data)
+        )
     }catch(error) {
         console.error(
-            'saveEntry :: error on save object: ', JSON.stringify(this.data)
+            'saveEntry :: error on save object: ', error
         )
-        alert.alert('Erro ao Salvar')
     }
-
     return data
-
 }
-
 
 export const deleteAll = async () => {
     const realm = await getRealm()
@@ -65,7 +73,6 @@ export const deleteAll = async () => {
         realm.write(() => {
             realm.delete(entries)
         })
-
     }catch(e){
         console.log(e);
 

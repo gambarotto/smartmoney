@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux'
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import Svg, { Circle, Rect } from 'react-native-svg'
+
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Colors from '../../../styles/Colors'
 
-const IndicatorCategory = ({ isFirstItem, isLastItem }) => {
+const IndicatorCategory = ({item, isFirstItem, isLastItem }) => {
 
   const bulletLineY = isFirstItem ? 25 : 0
   const bulletLineHeight = isLastItem ? 30 : 50
   const showBulletLine = !(isFirstItem && isLastItem)
-  //const bulletColor = item.category.color || Colors.white
-  const bulletColor = Colors.blue
+  const bulletColor = item.category.color || Colors.white
+  //const bulletColor = Colors.blue
 
   return (
     <View>
@@ -53,7 +54,7 @@ function EntryListItem({ item, isFirstItem, isLastItem, onEntryPress }) {
         item={item} />
       <View style={styles.containerExpense}>
         <View style={styles.nameExpense}>
-          <Text style={styles.labelNameExpense}>Descriçao</Text>
+          <Text style={styles.labelNameExpense}>{item.category.name}</Text>
         </View>
         <View style={styles.infoExpense}>
           {item.entryAt && (
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
   },
   labelNameExpense: {
     color: Colors.white,
-    fontSize: 12
+    fontSize: 14
   },
   infoExpense: {
     flex: 1,

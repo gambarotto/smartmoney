@@ -5,7 +5,7 @@ import EntrySummaryChart from './EntrySummaryChart'
 import EntrySummaryList from './EntrySummaryList'
 import Container from '../Core/Container'
 
-export default function EntrySummary({onPressActionButton, navigation}) {
+export default function EntrySummary({onPressActionButton, styleProps}) {
   
     const totalExpenses = useSelector(state => state.totalExpenses)
 
@@ -15,8 +15,8 @@ export default function EntrySummary({onPressActionButton, navigation}) {
       actionLabelText='Últimos 7 dias' 
       actionButtonText='Ver mais'
       onPressActionButton={onPressActionButton}
-      navigation={navigation}
-      iconName="insert-chart">
+      iconName="insert-chart"
+      styleProps={styleProps}>
         <EntrySummaryChart />
         <EntrySummaryList totalExpenses={totalExpenses}/>
     </Container>

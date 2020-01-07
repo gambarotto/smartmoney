@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 
 import BalanceLabel from '../../components/BalanceLabel'
 import NewEntryForm from '../../components/NewEntryForm'
-// import { Container } from './styles';
+import Colors from '../../styles/Colors'
 
 export default function NewEntry({navigation}) {
   return (
@@ -17,7 +17,7 @@ export default function NewEntry({navigation}) {
 const styles = StyleSheet.create({
   container:{
     flex:1,
-    justifyContent:'space-between',
-    //alignItems:'center'
+    backgroundColor:Colors.background,
+    padding:20
   }
 })
