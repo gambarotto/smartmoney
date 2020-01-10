@@ -24,6 +24,8 @@ const useCategories = () => {
                     setCreditCategories(await getCreditCategories())
                     setAllCategories(await getAllCategories())
                     setInitCategory(await getInitCategory())
+                    //console.log('useCategories')
+
                 }
             } catch (e) {
                 console.log(`NewEntryCategoryPicker :: useEffect error loadData ${e}`)

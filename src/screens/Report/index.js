@@ -18,54 +18,55 @@ export default function Report({ navigation }) {
   const [relativeDays, setRelativeDays] = useState(7)
 
   const [categoryModalVisible, setCategoryModalVisible] = useState(false)
-  const [category, setCategory] = useState({id:null, name:'Todas Categorias'})
+  const [category, setCategory] = useState({ id: null, name: 'Todas Categorias' })
 
   function onRelativeDaysPress(item) {
     setRelativeDays(item)
     setRelativeDaysModalVisible(false)
   }
 
-  function onModalCategoryPress(item){
+  function onModalCategoryPress(item) {
     setCategory(item)
     setCategoryModalVisible(false)
   }
 
   return (
-    <View style={styles.container}>
+      <View style={styles.container}>
 
-      <BalanceLabel />
-      <View style={styles.containerButtons}>
-        <TouchableOpacity style={styles.buttons} onPress={() => setCategoryModalVisible(true)}>
-          <Text style={styles.txtBtn}>{category.name}</Text>
-          <Icon name='keyboard-arrow-down' size={20} color={Colors.green} />
-        </TouchableOpacity>
-        <CategoryModal 
-          isVisible={categoryModalVisible} 
-          categoryType='all' 
-          onConfirm={onModalCategoryPress} 
-          onCancel={setCategoryModalVisible}/>
+        <BalanceLabel />
+        <View style={styles.containerButtons}>
+          <TouchableOpacity style={styles.buttons} onPress={() => setCategoryModalVisible(true)}>
+            <Text style={styles.txtBtn}>{category.name}</Text>
+            <Icon name='keyboard-arrow-down' size={20} color={Colors.green} />
+          </TouchableOpacity>
+          <CategoryModal
+            isVisible={categoryModalVisible}
+            categoryType='all'
+            onConfirm={onModalCategoryPress}
+            onCancel={setCategoryModalVisible} />
 
-        <TouchableOpacity style={styles.buttons} onPress={() => setRelativeDaysModalVisible(true)}>
-          <Text style={styles.txtBtn}>{relativeDays > 1 ? `Últimos ${relativeDays} Dias` : `${relativeDays} Dia atrás`}</Text>
-          <Icon name='keyboard-arrow-down' size={20} color={Colors.green} />
-        </TouchableOpacity>
-        <RelativeDaysModal 
-          isVisible={relativeDaysModalVisible} 
-          onConfirm={onRelativeDaysPress} 
-          onCancel={setRelativeDaysModalVisible} />
+          <TouchableOpacity style={styles.buttons} onPress={() => setRelativeDaysModalVisible(true)}>
+            <Text style={styles.txtBtn}>{relativeDays > 1 ? `Últimos ${relativeDays} Dias` : `${relativeDays} Dia atrás`}</Text>
+            <Icon name='keyboard-arrow-down' size={20} color={Colors.green} />
+          </TouchableOpacity>
+
+          <RelativeDaysModal
+            isVisible={relativeDaysModalVisible}
+            onConfirm={onRelativeDaysPress}
+            onCancel={setRelativeDaysModalVisible} />
+        </View>
+
+        <EntrySumary days={relativeDays} />
+        <EntryList days={relativeDays} category={category} />
+
+        <ActionFooter>
+          <ActionPrimaryButton
+            title='Fechar'
+            onPress={() => navigation.goBack()}
+          />
+        </ActionFooter>
       </View>
-
-      <EntrySumary days={relativeDays} />
-      <EntryList days={relativeDays} category={category} />
-
-      <ActionFooter>
-        <ActionPrimaryButton
-          title='Fechar'
-          onPress={() => navigation.goBack()}
-        />
-      </ActionFooter>
-
-    </View>
+    
 
   );
 }
@@ -77,10 +78,11 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     backgroundColor: Colors.background
   },
+
   containerButtons: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    alignItems:'center',
+    alignItems: 'center',
     paddingVertical: 5,
     marginTop: 8,
     marginHorizontal: 8

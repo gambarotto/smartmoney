@@ -8,7 +8,8 @@ const useBalance = () => {
     useEffect(() => {
         async function loadBalance(){
             const data = await getBalance()
-            setBalance(parseFloat(data.toFixed(2)))
+            setBalance(parseFloat(data))
+            //console.log('useBalance')
         }
         loadBalance()
     },[])

@@ -2,20 +2,21 @@ import React, { useState } from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import Svg, { Circle, Rect } from 'react-native-svg'
 
+import Currency from '../../Currency'
+import moment from '../../../vendors/moment'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Colors from '../../../styles/Colors'
 
 const IndicatorCategory = ({ item, isFirstItem, isLastItem }) => {
 
   const bulletLineY = isFirstItem ? 25 : 0
-  const bulletLineHeight = isLastItem ? 30 : 50
+  const bulletLineHeight = isLastItem ? 30 : 75 
   const showBulletLine = !(isFirstItem && isLastItem)
   const bulletColor = item.category.color || Colors.white
-  //const bulletColor = Colors.blue
 
   return (
     <View>
-      <Svg height="50" width="30">
+      <Svg height="75" width="30">
         {showBulletLine &&
           <Rect
             x='9'
@@ -26,7 +27,7 @@ const IndicatorCategory = ({ item, isFirstItem, isLastItem }) => {
           />}
         <Circle
           cx='10'
-          cy='25'
+          cy='35'
           r={8}
           stroke={Colors.background}
           strokeWidth='1.5'
@@ -60,19 +61,21 @@ function EntryListItem({ item, isFirstItem, isLastItem, onEntryPress }) {
             {item.entryAt && (
               <View style={styles.infos}>
                 <Icon name='access-time' size={12} color={Colors.metal} />
-                <Text style={styles.labelTimeLocalExpense}>{JSON.stringify(item.entryAt)}</Text>
+                <Text style={styles.labelTimeLocalExpense} numberOfLines={1}>{moment(item.entryAt).calendar()}</Text>
               </View>
             )}
             {item.address && (
               <View style={styles.infos}>
                 <Icon name='person-pin' size={12} color={Colors.metal} />
-                <Text style={styles.labelTimeLocalExpense}>{ item.address}</Text>
+                <Text style={styles.labelTimeLocalExpense} numberOfLines={1}>{ item.address}</Text>
               </View>
             )}
           </View>
         </View>
         <View style={styles.containerValue}>
-          <Text style={styles.labelValueExpense}>{`$ ${item.amount}`}</Text>
+          <Text style={styles.labelValueExpense}>
+            <Currency value={item.amount} />
+          </Text>
         </View>
       </TouchableOpacity>
 
@@ -83,10 +86,11 @@ export default EntryListItem;
 
 const styles = StyleSheet.create({
   container: {
-    height: 50,
+    height: 70,
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginTop:2,
   },
   containerExpense: {
     flex: 1,
@@ -96,19 +100,20 @@ const styles = StyleSheet.create({
   },
   nameExpense: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   labelNameExpense: {
     color: Colors.white,
-    fontSize: 14
+    fontSize: 15,
   },
   infoExpense: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'flex-start'
   },
   infos: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    paddingLeft:5,
+    marginBottom:2
   },
   labelInfoExpense: {
     color: Colors.white
@@ -117,7 +122,8 @@ const styles = StyleSheet.create({
     color: Colors.metal,
     fontSize: 12,
     marginRight: 10,
-    paddingLeft: 5
+    paddingLeft: 5,
+
   },
   containerValue: {
     flex: 1,
@@ -144,6 +150,3 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20
   }
 })
-
-//
-//

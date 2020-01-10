@@ -6,16 +6,17 @@ import EntrySummaryChart from './EntrySummaryChart'
 import EntrySummaryList from './EntrySummaryList'
 import Container from '../Core/Container'
 import useBalanceSumByCategory from '../../hooks/useBalanceSumByCategory'
-export default function EntrySummary({days = 7,onPressActionButton, styleProps}) {
+export default function EntrySummary({days = 7,onPressActionButton, styleProps, report = true}) {
   
     //const totalExpenses = useSelector(state => state.totalExpenses)
     const [balaceSum] = useBalanceSumByCategory(days)
 
+  
     return (
     <Container 
       title={'Categorias'} 
       actionLabelText={`Últimos ${days} dias` }
-      actionButtonText='Ver mais'
+      actionButtonText={!report && 'Ver Mais'}
       onPressActionButton={onPressActionButton}
       iconName="insert-chart"
       styleProps={styleProps}>

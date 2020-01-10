@@ -41,7 +41,8 @@ export default function NewEntryForm({ navigation }) {
 
 
     function isValid() {
-        return parseFloat(amount) !== 0 ? true : false
+        
+        return parseFloat(amount) !== 0 && category.id  ? true : false
     }
 
     async function onSave() {
@@ -77,7 +78,7 @@ export default function NewEntryForm({ navigation }) {
 
     function prefixFunc(bool) {
         setPrefix(bool)
-        console.log('NewEntryForm -> prefixFunc :: ', !prefix);
+        //console.log('NewEntryForm -> prefixFunc :: ', !prefix);
 
     }
     function onChangeCategory(newCategory) {

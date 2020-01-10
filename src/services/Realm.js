@@ -3,13 +3,14 @@ import Realm from 'realm'
 import CategorySchema from '../schemas/CategorySchema'
 import EntrySchema from '../schemas/EntrySchema'
 import { getDefaultCategories } from './Categories'
+import { cleanInitialized } from './Welcome'
 
 export const getRealm = async () => {
     const realm = await Realm.open({
         schema: [CategorySchema, EntrySchema],
         schemaVersion: 3
     })
-    //dropDB(realm) //-- deleta o banco
+    //dropDB(realm) //-- deleta o banco (reamldb / asyncStorage)
     initDB(realm)
 
     return realm
@@ -44,4 +45,6 @@ export const dropDB = realm => {
     realm.write(() => {
         realm.deleteAll()
     })
+    cleanInitialized()
+
 }

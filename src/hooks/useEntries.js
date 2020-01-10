@@ -9,6 +9,8 @@ const useEntries = ( days = 7, category) => {
 
         async function loadEntries(){
             setEntries(await getEntries(days, category))
+            //console.log('useEntry ----')
+
         }
 
         loadEntries()

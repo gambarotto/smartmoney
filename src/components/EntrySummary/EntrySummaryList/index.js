@@ -2,6 +2,7 @@ import React from 'react';
 import { View ,Text ,FlatList,ScrollView, StyleSheet } from 'react-native';
 import Svg, { Circle } from 'react-native-svg'
 
+import Currency from '../../Currency'
 import Colors from '../../../styles/Colors'
 
 const ItemList = ({ description, value, indicator }) => {
@@ -24,7 +25,9 @@ const ItemList = ({ description, value, indicator }) => {
         <Text style={styles.txtItem}>{description}</Text>
       </View>
       <View style={styles.containerValueItem}>
-        <Text style={styles.txtItem}>{value.toFixed(2)}</Text>
+        <Text style={styles.txtItem}>
+          <Currency value={value.toFixed(2)} />
+        </Text>
       </View>
 
     </View>

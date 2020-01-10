@@ -7,7 +7,7 @@ import Container from '../Core/Container'
 
 import useEntries from '../../hooks/useEntries'
 
-export default function EntryList({days = 7, category, onEntryPress, onPressActionButton, styleProps }) {
+export default function EntryList({days = 7, category, onEntryPress, onPressActionButton, styleProps, report = true}) {
 
   const [expenseList] = useEntries(days, category)
 
@@ -15,7 +15,7 @@ export default function EntryList({days = 7, category, onEntryPress, onPressActi
     <Container
       title='Últimos Lançamentos'
       actionLabelText={`Últimos ${days} dias`}
-      actionButtonText='Ver mais'
+      actionButtonText={!report && 'Ver Mais'}
       iconName='insert-chart'
       onPressActionButton={onPressActionButton}
       styleProps={styleProps}>

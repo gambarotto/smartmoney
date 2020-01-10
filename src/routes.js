@@ -1,11 +1,20 @@
+
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 
+import Loading from './screens/Loading'
+import Welcome from './screens/Welcome'
 import Main from './screens/Main'
 import NewEntry from './screens/NewEntry'
 import Report from './screens/Report'
 
 const AppStack = createSwitchNavigator({
+    Loading:{
+        screen:Loading
+    },
+    Welcome: {
+        screen: Welcome
+    },
     Main: {
         screen:Main,
     },
@@ -17,7 +26,7 @@ const AppStack = createSwitchNavigator({
     },
 }, {
     //initialRouteName: 'NewEntry',
-    initialRouteName: 'Main',
+    initialRouteName: 'Loading',
     backBehavior:'history'
 })
 

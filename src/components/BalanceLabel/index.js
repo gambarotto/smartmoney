@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux'
 import LinearGradient from 'react-native-linear-gradient'
 
+import Currency from '../Currency'
 import useBalance from '../../hooks/useBalance'
 
 import Colors from '../../styles/Colors'
@@ -15,7 +16,9 @@ const BalanceLabel = () => {
         <View style={styles.container}>
             <Text style={styles.label}>Saldo Atual</Text>
             <LinearGradient style={styles.panel} colors={[Colors.violet, Colors.blue]}>
-                <Text style={styles.value}>{balance}</Text>
+                <Text style={styles.value}>
+                    <Currency value={balance} />
+                </Text>
             </LinearGradient>
         </View>
     )

@@ -12,6 +12,8 @@ export default function useBalanceSumByDate(days = 7){
         async function loadBalanceSumByDate(){
             const data = await getBalanceSumByDate(days)
             setBalanceSum([...data])
+            //console.log('useBalanceByDate')
+
         }
 
         loadBalanceSumByDate()

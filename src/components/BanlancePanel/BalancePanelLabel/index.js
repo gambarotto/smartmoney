@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
+import Currency from '../../Currency'
 import Colors from '../../../styles/Colors'
 
 export default function BalancePanelLabel({currentValue}) {
@@ -10,7 +11,7 @@ export default function BalancePanelLabel({currentValue}) {
         Saldo Atual
       </Text>
       <Text style={styles.value}>
-        {currentValue}
+        <Currency value={currentValue}/>
       </Text>
     </View>
   );

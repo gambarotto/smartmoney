@@ -1,4 +1,5 @@
 import {getRealm} from './Realm'
+import getUUID from '../services/UUID'
 import moment from '../vendors/moment'
 
 export const getEntries = async(days, category) => {
@@ -36,26 +37,25 @@ export const deleteEntry = async (data) => {
     }
 }
 
-export const saveEntry = async (value, idSelected) => {
+export const saveEntry = async (value, idSelected ) => {
     const realm = await getRealm()
     let data ={}
-    const { id, amount, entryAt, category, photo, address, latitude, longitude } = value
+    //const { id, amount, entryAt, category, photo, address, latitude, longitude } = value
 
     try{
-        if(!idSelected.id) console.log('fffffffff')
-        console.log(value)
+       // console.log(value)
         realm.write(() => {
             data = {
-                id: idSelected.id ? idSelected.id : id,
-                amount: amount,
-                entryAt: entryAt,
-                isInit: false,
-                category: category,
-                photo:photo,
-                address: address,
+                id: value.isInit ? getUUID() : value.id || idSelected.id || getUUID(),
+                amount: value.amount || 0,
+                entryAt: value.entryAt || new Date(),
+                isInit: value.isInit || false,
+                category: value.category,
+                photo:value.photo || null,
+                address: value.address || null,
                 //address: idSelected.id ? address : address,
-                latitude:latitude || idSelected.latitude,
-                longitude: longitude || idSelected.latitude
+                latitude: value.isInit ? null : value.latitude || idSelected.latitude || null,
+                longitude: value.isInit ? null : value.longitude || idSelected.latitude || null
             }
             realm.create('Entry', data, true)
         })
