@@ -14,9 +14,9 @@ const Container = ({
     actionButtonText,
     onPressActionButton,
     iconName,
-    styleProps }) => (
+    styleProps = 1}) => (
 
-        <View style={[styles.container, styleProps !== 0 && {marginTop:styleProps}]}>
+        <View style={[styles.container, styleProps !== 0 && {flex:styleProps}]}>
             {title && <Text style={styles.title}>{title}</Text>}
             {children}
             {(actionLabelText || actionButtonText) && (
@@ -38,8 +38,10 @@ export default Container;
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        justifyContent:'space-between',
+        //justifyContent:'space-between',
         backgroundColor: Colors.asphalt,
+        //backgroundColor: 'black',
+
         borderRadius: 8,
         marginVertical: 8,
         marginHorizontal:8,

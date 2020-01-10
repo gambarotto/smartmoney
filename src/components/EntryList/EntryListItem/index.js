@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux'
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import Svg, { Circle, Rect } from 'react-native-svg'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Colors from '../../../styles/Colors'
 
-const IndicatorCategory = ({item, isFirstItem, isLastItem }) => {
+const IndicatorCategory = ({ item, isFirstItem, isLastItem }) => {
 
   const bulletLineY = isFirstItem ? 25 : 0
   const bulletLineHeight = isLastItem ? 30 : 50
@@ -45,48 +44,42 @@ function EntryListItem({ item, isFirstItem, isLastItem, onEntryPress }) {
   }
 
   return (
-    <TouchableOpacity
-      style={styles.container}
-      onPress={onEntrySelected}>
-      <IndicatorCategory
-        isFirstItem={isFirstItem}
-        isLastItem={isLastItem}
-        item={item} />
-      <View style={styles.containerExpense}>
-        <View style={styles.nameExpense}>
-          <Text style={styles.labelNameExpense}>{item.category.name}</Text>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={onEntrySelected}>
+        <IndicatorCategory
+          isFirstItem={isFirstItem}
+          isLastItem={isLastItem}
+          item={item} />
+
+        <View style={styles.containerExpense}>
+          <View style={styles.nameExpense}>
+            <Text style={styles.labelNameExpense}>{item.category.name}</Text>
+          </View>
+          <View style={styles.infoExpense}>
+            {item.entryAt && (
+              <View style={styles.infos}>
+                <Icon name='access-time' size={12} color={Colors.metal} />
+                <Text style={styles.labelTimeLocalExpense}>{JSON.stringify(item.entryAt)}</Text>
+              </View>
+            )}
+            {item.address && (
+              <View style={styles.infos}>
+                <Icon name='person-pin' size={12} color={Colors.metal} />
+                <Text style={styles.labelTimeLocalExpense}>{ item.address}</Text>
+              </View>
+            )}
+          </View>
         </View>
-        <View style={styles.infoExpense}>
-          {item.entryAt && (
-            <View style={styles.infos}>
-              <Icon name='access-time' size={12} color={Colors.metal} />
-              <Text style={styles.labelTimeLocalExpense}>{JSON.stringify(item.entryAt)}</Text>            
-            </View>
-          )}
-          {item.address && (
-            <View style={styles.infos}>
-              <Icon name='person-pin' size={12} color={Colors.metal} />
-              <Text style={styles.labelTimeLocalExpense}>local</Text>
-            </View>
-          )}
+        <View style={styles.containerValue}>
+          <Text style={styles.labelValueExpense}>{`$ ${item.amount}`}</Text>
         </View>
-      </View>
-      <View style={styles.containerValue}>
-        <Text style={styles.labelValueExpense}>{`$ ${item.amount}`}</Text>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+
   )
 }
 
 export default EntryListItem;
-
-// <View style={[styles.indicatorItem, { backgroundColor: 'red' }]} />
-// <View style={styles.containerDescriptionItem}>
-//     <Text>{item.id}</Text>
-// </View>
-// <View style={styles.containerValueItem}>
-//     <Text>{item.amount}</Text>
-// </View>
 
 const styles = StyleSheet.create({
   container: {
@@ -94,20 +87,16 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between'
-    //padding: 5,
   },
   containerExpense: {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'stretch',
-    //backgroundColor: 'yellow',
-    //justifyContent: 'space-between',
     maxWidth: '70%'
   },
   nameExpense: {
     flex: 1,
-    justifyContent:'center'
-    //backgroundColor: 'purple',
+    justifyContent: 'center'
   },
   labelNameExpense: {
     color: Colors.white,
@@ -115,13 +104,11 @@ const styles = StyleSheet.create({
   },
   infoExpense: {
     flex: 1,
-    //backgroundColor: 'red',
     flexDirection: 'row',
-    //justifyContent:'flex-start',
     alignItems: 'center'
   },
-  infos:{
-    flexDirection:'row'
+  infos: {
+    flexDirection: 'row'
   },
   labelInfoExpense: {
     color: Colors.white
@@ -134,15 +121,27 @@ const styles = StyleSheet.create({
   },
   containerValue: {
     flex: 1,
-    maxWidth: '15%',
-    //backgroundColor: 'green',
+    maxWidth: '30%',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'flex-end'
   },
   labelValueExpense: {
     color: Colors.white,
     fontSize: 14,
     fontWeight: 'bold'
+  },
+  actionContainer: {
+    flex: 1,
+    width: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  rightAction: {
+    width: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.red,
+    paddingHorizontal: 20
   }
 })
 

@@ -19,8 +19,10 @@ export default function BalancePanelLabel({currentValue}) {
 const styles = StyleSheet.create({
   container:{
     //flex:1,
+    paddingTop:10,
     justifyContent:'center',
     alignItems:'center',
+    zIndex:1
   },
   label:{
     fontSize:14,

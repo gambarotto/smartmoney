@@ -37,16 +37,12 @@ export default function BanlancePanel({onPressNavigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    //justifyContent:'flex-end',
-    //alignItems:'flex-end'
+    marginBottom:-25
   },
   painel: {
-    //flex:1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 10,
-
   },
   button:{
     alignSelf:'flex-end',

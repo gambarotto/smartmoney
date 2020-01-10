@@ -7,7 +7,7 @@ import Container from '../Core/Container'
 
 import useEntries from '../../hooks/useEntries'
 
-export default function EntryList({days = 7, category, onEntryPress, onPressActionButton }) {
+export default function EntryList({days = 7, category, onEntryPress, onPressActionButton, styleProps }) {
 
   const [expenseList] = useEntries(days, category)
 
@@ -17,7 +17,8 @@ export default function EntryList({days = 7, category, onEntryPress, onPressActi
       actionLabelText={`Últimos ${days} dias`}
       actionButtonText='Ver mais'
       iconName='insert-chart'
-      onPressActionButton={onPressActionButton}>
+      onPressActionButton={onPressActionButton}
+      styleProps={styleProps}>
       <FlatList
         data={expenseList}
         keyExtractor={item => item.id}

@@ -25,8 +25,8 @@ export default function Main({ navigation }) {
   return (
     <View style={styles.container}>
       <BalancePainel onPressNavigation={onPressNavigation} />
-      <EntrySummary styleProps={-15} onPressActionButton={onPressActionButton}/>
-      <EntryList onEntryPress={onEntryPress} onPressActionButton={() => navigation.navigate('Report')}/>
+      <EntrySummary styleProps={4.5} onPressActionButton={onPressActionButton}/>
+      <EntryList styleProps={7} onEntryPress={onEntryPress} onPressActionButton={() => navigation.navigate('Report')}/>
     </View>
   );
 }

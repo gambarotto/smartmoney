@@ -39,7 +39,7 @@ export const deleteEntry = async (data) => {
 export const saveEntry = async (value, idSelected) => {
     const realm = await getRealm()
     let data ={}
-    const { id, amount, entryAt, category } = value
+    const { id, amount, entryAt, category, photo, address, latitude, longitude } = value
 
     try{
         if(!idSelected.id) console.log('fffffffff')
@@ -50,7 +50,12 @@ export const saveEntry = async (value, idSelected) => {
                 amount: amount,
                 entryAt: entryAt,
                 isInit: false,
-                category: category
+                category: category,
+                photo:photo,
+                address: address,
+                //address: idSelected.id ? address : address,
+                latitude:latitude || idSelected.latitude,
+                longitude: longitude || idSelected.latitude
             }
             realm.create('Entry', data, true)
         })

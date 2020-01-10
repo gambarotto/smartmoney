@@ -7,6 +7,8 @@ import ActionFooter,  { ActionPrimaryButton, ActionSecondaryButton } from '../Co
 import NewEntryInput from './NewEntryInput'
 import NewEntryCategoryPicker from './NewEntryCategoryPicker'
 import NewEntryDatePicker from './NewEntryDatePicker'
+import NewEntryCameraPicker from './NewEntryCameraPicker'
+import NewEntryAddressPicker from './NewEntryAddressPicker'
 import NewEntryDeleAction from './NewEntryDeleAction'
 
 import useEntries from '../../hooks/useEntries'
@@ -17,7 +19,12 @@ export default function NewEntryForm({ navigation }) {
         id: null,
         amount: '0',
         category: { id: null, name: 'Selecione' },
-        entryAt: new Date()
+        entryAt: new Date(),
+        photo:null,
+        address:null,
+        latitude:null,
+        longitude:null,
+
     })
 
     const [, saveEntry, deleteEntry] = useEntries()
@@ -26,6 +33,12 @@ export default function NewEntryForm({ navigation }) {
     const [category, setCategory] = useState(expenseSelected.category)
     const [prefix, setPrefix] = useState(expenseSelected.amount <= 0 ? false : true)
     const [entryAt, setEntryAt] = useState(expenseSelected.entryAt)
+    const [photo, setPhoto] = useState(expenseSelected.photo)
+    const [address, setAddress] = useState(expenseSelected.address)
+    const [latitude, setLatitude] = useState(expenseSelected.latitude)
+    const [longitude, setLongitude] = useState(expenseSelected.longitude)
+
+
 
     function isValid() {
         return parseFloat(amount) !== 0 ? true : false
@@ -39,8 +52,12 @@ export default function NewEntryForm({ navigation }) {
         const value = {
             id: getUUID(),
             amount: val,
-            category: category,
-            entryAt: entryAt
+            category,
+            photo,
+            entryAt,
+            address,
+            latitude,
+            longitude
         }
         console.log(`onSave :: value => ${JSON.stringify(value)}`);
         console.log(`onSave :: expenseValue => ${JSON.stringify(expenseSelected)}`);
@@ -68,6 +85,12 @@ export default function NewEntryForm({ navigation }) {
         console.log('onChangeCategory :: ', newCategory);
     }
 
+    function attAddress({latitude, longitude, address}){
+        setLatitude(latitude)
+        setLongitude(longitude)
+        setAddress(address)
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.containerInputs}>
@@ -77,12 +100,8 @@ export default function NewEntryForm({ navigation }) {
 
             <View style={styles.containerFormActions}>
                 <NewEntryDatePicker value={entryAt} onChange={setEntryAt}/>
-                <TouchableOpacity style={styles.actionsBtns}>
-                    <Text style={styles.btn}>Cam</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.actionsBtns}>
-                    <Text style={styles.btn}>Loc</Text>
-                </TouchableOpacity>
+                <NewEntryCameraPicker photo={photo} onChangePhoto={setPhoto} />
+                <NewEntryAddressPicker address={address} onChange={attAddress} />
                 { expenseSelected.id && <NewEntryDeleAction onRemove={onRemove} expenseSelected={expenseSelected}/>}
             </View>
             

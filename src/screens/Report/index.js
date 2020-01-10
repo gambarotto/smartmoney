@@ -55,7 +55,7 @@ export default function Report({ navigation }) {
           onCancel={setRelativeDaysModalVisible} />
       </View>
 
-      <EntrySumary styleProps={0} />
+      <EntrySumary days={relativeDays} />
       <EntryList days={relativeDays} category={category} />
 
       <ActionFooter>
